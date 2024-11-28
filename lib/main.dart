@@ -114,10 +114,12 @@ class _HeightRulerState extends State<HeightPicker> {
           Container(
             height: 200,
             child: ListWheelScrollView.useDelegate(
+              controller: FixedExtentScrollController(initialItem: 25 ),
               itemExtent: 20,
               physics: FixedExtentScrollPhysics(),
               onSelectedItemChanged: (int index) {
                 setState(() {
+                  print(selectedHeight);
                   selectedIndex = index;
                   selectedHeight =
                       index + 160; // Starting height

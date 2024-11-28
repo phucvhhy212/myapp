@@ -276,7 +276,7 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
             children: <Widget>[
               CarouselSlider(
                 items: imageSliders,
-                options: CarouselOptions(enlargeCenterPage: true, height: 200),
+                options: CarouselOptions(enlargeCenterPage: true, height: 200, animateToClosest: true),
                 carouselController: _controller,
               ),
               Row(

@@ -39,7 +39,7 @@ class RadialSlider extends StatefulWidget {
   State<RadialSlider> createState() => _RadialSliderState();
 }
 
-double _currentAngle = -math.pi;
+double _currentAngle = -3 * math.pi / 4;
 
 class _RadialSliderState extends State<RadialSlider> {
   double _currentValue = 1; // Start at level 1

@@ -36,23 +36,92 @@ class _HealthAppState extends State<HealthApp> {
   AppState _state = AppState.DATA_NOT_FETCHED;
   int _nofSteps = 0;
   List<RecordingMethod> recordingMethodsToFilter = [];
-
+  List<HealthDataType> dataTypesAndroid = [
+    HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.BLOOD_GLUCOSE,
+    HealthDataType.BLOOD_OXYGEN,
+    HealthDataType.BODY_FAT_PERCENTAGE,
+    // HealthDataType.BODY_MASS_INDEX,
+    HealthDataType.BODY_TEMPERATURE,
+    HealthDataType.HEART_RATE,
+    HealthDataType.HEART_RATE_VARIABILITY_RMSSD,
+    HealthDataType.HEIGHT,
+    HealthDataType.STEPS,
+    HealthDataType.WEIGHT,
+    HealthDataType.DISTANCE_DELTA,
+    HealthDataType.SLEEP_ASLEEP,
+    HealthDataType.SLEEP_AWAKE_IN_BED,
+    HealthDataType.SLEEP_AWAKE,
+    HealthDataType.SLEEP_DEEP,
+    HealthDataType.SLEEP_LIGHT,
+    HealthDataType.SLEEP_OUT_OF_BED,
+    HealthDataType.SLEEP_REM,
+    HealthDataType.SLEEP_SESSION,
+    HealthDataType.SLEEP_UNKNOWN,
+    HealthDataType.WATER,
+    HealthDataType.RESTING_HEART_RATE,
+    HealthDataType.FLIGHTS_CLIMBED,
+    HealthDataType.RESPIRATORY_RATE,
+    HealthDataType.TOTAL_CALORIES_BURNED,
+  ];
+  List<HealthDataType> dataTypesIOS = [
+    HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.BLOOD_GLUCOSE,
+    HealthDataType.BLOOD_OXYGEN,
+    HealthDataType.BODY_FAT_PERCENTAGE,
+    HealthDataType.BODY_MASS_INDEX,
+    HealthDataType.BODY_TEMPERATURE,
+    HealthDataType.DIETARY_CHOLESTEROL,
+    HealthDataType.HEART_RATE,
+    HealthDataType.HEART_RATE_VARIABILITY_SDNN,
+    HealthDataType.HEIGHT,
+    HealthDataType.HIGH_HEART_RATE_EVENT,
+    HealthDataType.IRREGULAR_HEART_RATE_EVENT,
+    HealthDataType.LOW_HEART_RATE_EVENT,
+    HealthDataType.RESTING_HEART_RATE,
+    HealthDataType.RESPIRATORY_RATE,
+    HealthDataType.STEPS,
+    HealthDataType.WALKING_HEART_RATE,
+    HealthDataType.WEIGHT,
+    HealthDataType.DISTANCE_WALKING_RUNNING,
+    HealthDataType.DISTANCE_SWIMMING,
+    HealthDataType.DISTANCE_CYCLING,
+    HealthDataType.SLEEP_ASLEEP,
+    HealthDataType.SLEEP_AWAKE,
+    HealthDataType.SLEEP_DEEP,
+    HealthDataType.SLEEP_IN_BED,
+    HealthDataType.SLEEP_LIGHT,
+    HealthDataType.SLEEP_REM,
+    HealthDataType.WATER,
+  ];
   // All types available depending on platform (iOS ot Android).
-  // List<HealthDataType> get types => [];
+  List<HealthDataType> get types => (Platform.isAndroid)
+      ? dataTypesAndroid
+      : (Platform.isIOS)
+          ? dataTypesIOS
+          : [];
 
   // // Or specify specific types
-  static final types = [
-    // HealthDataType.WEIGHT,
-    HealthDataType.STEPS,
-    // HealthDataType.HEIGHT,
-    // HealthDataType.BLOOD_GLUCOSE,
-    // HealthDataType.WORKOUT,
-    // HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
-    // HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
-    HealthDataType.HEART_RATE
-    // Uncomment this line on iOS - only available on iOS
-    // HealthDataType.AUDIOGRAM
-  ];
+  // static final types = [
+  //   // P1
+  //   HealthDataType.RESTING_HEART_RATE,
+  //   HealthDataType.BODY_TEMPERATURE,
+  //   // Resilience Status
+  //   HealthDataType.ACTIVE_ENERGY_BURNED,
+  //   HealthDataType.DISTANCE_WALKING_RUNNING,
+  //   HealthDataType.STEPS,
+  //   HealthDataType.HEART_RATE,
+  //   HealthDataType.SLEEP_ASLEEP,
+  //   HealthDataType.SLEEP_AWAKE,
+  //   HealthDataType.SLEEP_DEEP,
+  //   HealthDataType.SLEEP_IN_BED,
+  //   HealthDataType.SLEEP_LIGHT,
+  //   HealthDataType.SLEEP_REM,
+  //   // P2
+  //   HealthDataType.HEART_RATE_VARIABILITY_RMSSD,
+  //   HealthDataType.HEART_RATE_VARIABILITY_SDNN,
+  //   HealthDataType.RESPIRATORY_RATE,
+  // ];
 
   // Set up corresponding permissions
 
@@ -284,20 +353,27 @@ class _HealthAppState extends State<HealthApp> {
       startTime: earlier,
       endTime: now,
     );
+
+    success &= await Health().writeHealthData(
+      value: 25.0,
+      type: HealthDataType.BODY_MASS_INDEX,
+      startTime: earlier,
+      endTime: now,
+    );
     // success &= await Health().writeWorkoutData(
-    //   activityType: HealthWorkoutActivityType.AMERICAN_FOOTBALL,
-    //   title: "Random workout name that shows up in Health Connect",
-    //   start: now.subtract(const Duration(minutes: 15)),
-    //   end: now,
-    //   totalDistance: 2430,
-    //   totalEnergyBurned: 400,
-    // );
-    // success &= await Health().writeBloodPressure(
-    //   systolic: 90,
-    //   diastolic: 80,
-    //   startTime: now,
-    // );
-    // success &= await Health().writeMeal(
+    // //   activityType: HealthWorkoutActivityType.AMERICAN_FOOTBALL,
+    // //   title: "Random workout name that shows up in Health Connect",
+    // //   start: now.subtract(const Duration(minutes: 15)),
+    // //   end: now,
+    // //   totalDistance: 2430,
+    // //   totalEnergyBurned: 400,
+    // // );
+    // // success &= await Health().writeBloodPressure(
+    // //   systolic: 90,
+    // //   diastolic: 80,
+    // //   startTime: now,
+    // // );
+    // // success &= await Health().writeMeal(
     //     mealType: MealType.SNACK,
     //     startTime: earlier,
     //     endTime: now,
